@@ -18,7 +18,7 @@ export const ProductSidebar = () => (
       <h3 className="font-display font-bold text-slate-900">Compra em breve</h3>
       <ol className="mt-3 list-decimal space-y-2 pl-4 text-sm leading-relaxed text-slate-600">
         <li>Escolha seu produto e veja todos os detalhes.</li>
-        <li>Clique em "Quero este produto" para falar com nosso time.</li>
+        <li>Clique em Quero este produto para falar com nosso time.</li>
         <li>Finalize a compra assim que o checkout oficial for liberado.</li>
       </ol>
     </div>

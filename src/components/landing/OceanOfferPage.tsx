@@ -187,8 +187,10 @@ export function OceanOfferPage() {
               <div className="flex items-center gap-3">
                 <Image src={r.avatar} alt="" width={44} height={44} className="h-11 w-11 rounded-full" />
                 <div>
-                  <p className="text-sm font-bold text-slate-900">{r.name}</p>
-                  <p className="text-xs text-slate-500">{r.city}</p>
+                  <p className="text-sm font-bold text-slate-900">{r.author}</p>
+                  {r.location ? (
+                    <p className="text-xs text-slate-500">{r.location}</p>
+                  ) : null}
                 </div>
               </div>
               <div className="mt-3"><Stars rating={r.rating} /></div>
