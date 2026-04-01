@@ -9,13 +9,13 @@ export const homeReviews: Review[] = [
   {
     author: "Marina L.",
     rating: 5,
-    text: "Chegou o voucher na hora. Retirei na loja parceira sem fila.",
+    text: "Confirmação do pedido chegou na hora. Compra simples e sem complicação.",
     avatar: "https://i.pravatar.cc/120?img=32",
   },
   {
     author: "Ricardo P.",
     rating: 5,
-    text: "Pix super rápido. Meu filho amou o kit espacial.",
+    text: "Pix super rápido. Meu filho amou o kit bomba de banho.",
     avatar: "https://i.pravatar.cc/120?img=12",
   },
   {
@@ -36,7 +36,7 @@ export const productReviews: Review[] = [
   {
     author: "Pedro H.",
     rating: 5,
-    text: "Suporte respondeu em minutos quando precisei trocar o voucher.",
+    text: "Suporte respondeu em minutos quando precisei ajustar meu pedido.",
     avatar: "https://i.pravatar.cc/120?img=33",
   },
 ];

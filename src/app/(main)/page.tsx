@@ -1,19 +1,12 @@
-import { Hero } from "@/components/sections/Hero";
-import { SocialProof } from "@/components/sections/SocialProof";
-import { FeaturedCarousel } from "@/components/sections/FeaturedCarousel";
-import { Benefits } from "@/components/sections/Benefits";
-import { BestSellers } from "@/components/sections/BestSellers";
-import { FinalCta } from "@/components/sections/FinalCta";
+import type { Metadata } from "next";
+import { OceanOfferPage } from "@/components/landing/OceanOfferPage";
+
+export const metadata: Metadata = {
+  title: "Bomba de Banho Surpresa Oceano — Oferta Especial | Toy Pix",
+  description:
+    "Página oficial da Bomba de Banho Surpresa Oceano: kits com melhor custo-benefício, frete grátis, compra segura e entrega rastreada.",
+};
 
 export default function HomePage() {
-  return (
-    <>
-      <Hero />
-      <SocialProof />
-      <FeaturedCarousel />
-      <Benefits />
-      <BestSellers />
-      <FinalCta />
-    </>
-  );
+  return <OceanOfferPage />;
 }

@@ -80,12 +80,26 @@ export default function ProductPage({ params }: Props) {
         productName={product.name}
       />
       <article className="mx-auto max-w-6xl px-4 pb-16 pt-6">
+        <p className="mb-4 rounded-xl bg-primary/10 px-4 py-3 text-sm text-slate-700">
+          <Link href="/#oferta" className="font-bold text-primary hover:underline">
+            Ver oferta completa do Kit Espacial na página principal →
+          </Link>
+        </p>
         <nav aria-label="Breadcrumb" className="text-sm text-slate-500">
           <Link
             href="/"
             className="rounded-md hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
           >
             Início
+          </Link>
+          <span className="mx-2" aria-hidden>
+            /
+          </span>
+          <Link
+            href="/produtos"
+            className="rounded-md hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+          >
+            Produtos
           </Link>
           <span className="mx-2" aria-hidden>
             /

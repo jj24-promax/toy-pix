@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     template: "%s | Toy Pix",
   },
   description:
-    "Brinquedos selecionados, checkout Pix e voucher digital. Entrega sem complicação.",
+    "Brinquedos selecionados com compra segura via Pix. Entrega sem complicação.",
 };
 
 export default function RootLayout({

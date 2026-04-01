@@ -12,32 +12,47 @@ export const SiteHeader = () => {
 
   return (
     <>
+      <div className="bg-slate-900 px-4 py-2 text-center text-xs font-semibold text-white">
+        Frete grátis para todo o Brasil
+      </div>
       <header className="sticky top-0 z-30 border-b border-mint-100/80 bg-white/90 backdrop-blur-md">
         <div className="mx-auto flex min-h-14 max-w-6xl items-center justify-between gap-3 px-4 py-2 md:py-0">
           <Link
-            href="/"
+            href="/#inicio"
             className="inline-flex min-h-11 min-w-[44px] items-center rounded-lg font-display text-xl font-bold text-bubblegum-600 transition hover:text-bubblegum-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bubblegum-500 focus-visible:ring-offset-2"
           >
             Toy Pix
           </Link>
           <nav
-            className="hidden items-center gap-2 md:flex"
+            className="hidden items-center gap-1 md:flex"
             aria-label="Principal"
           >
-            <Link href="/" className={buttonVariants({ variant: "ghost" })}>
-              Início
-            </Link>
-            <Link
-              href="/produto/kit-aventura-espacial"
-              className={buttonVariants({ variant: "ghost" })}
-            >
+            <Link href="/produtos" className={buttonVariants({ variant: "ghost" })}>
               Produtos
             </Link>
+            <Link href="/#inicio" className={buttonVariants({ variant: "ghost" })}>
+              Início
+            </Link>
+            <Link href="/#kits" className={buttonVariants({ variant: "ghost" })}>
+              Kits
+            </Link>
+            <Link href="/#avaliacoes" className={buttonVariants({ variant: "ghost" })}>
+              Avaliações
+            </Link>
+            <Link href="/#faq" className={buttonVariants({ variant: "ghost" })}>
+              FAQ
+            </Link>
+            <Link href="/#contato" className={buttonVariants({ variant: "ghost" })}>
+              Contato
+            </Link>
             <Link
-              href="/checkout-pix?product=1"
-              className={buttonVariants({ variant: "primary" })}
+              href="/#kits"
+              className={cn(
+                buttonVariants({ variant: "primary" }),
+                "ml-2 min-h-12 px-6 text-base shadow-[0_14px_30px_-16px_rgba(20,184,150,0.9)]"
+              )}
             >
-              Pagar com Pix
+              Comprar agora
             </Link>
           </nav>
           <button

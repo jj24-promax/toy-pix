@@ -13,15 +13,15 @@ type Props = {
 };
 
 const links = [
-  { href: "/", label: "Início", variant: "default" as const },
+  { href: "/produtos", label: "Produtos", variant: "default" as const },
+  { href: "/#inicio", label: "Início", variant: "default" as const },
+  { href: "/#kits", label: "Kits", variant: "default" as const },
+  { href: "/#avaliacoes", label: "Avaliações", variant: "default" as const },
+  { href: "/#faq", label: "FAQ", variant: "default" as const },
+  { href: "/#contato", label: "Contato", variant: "default" as const },
   {
-    href: "/produto/kit-aventura-espacial",
-    label: "Produtos",
-    variant: "default" as const,
-  },
-  {
-    href: "/checkout-pix?product=1",
-    label: "Pagar com Pix",
+    href: "/#kits",
+    label: "Comprar agora",
     variant: "cta" as const,
   },
 ];
@@ -117,7 +117,7 @@ export const MobileDrawer = ({ open, onClose, triggerRef }: Props) => {
             />
             <ul className="flex flex-col gap-2">
               {links.map((l) => (
-                <li key={l.href}>
+                <li key={l.href + l.label}>
                   <Link
                     href={l.href}
                     className={cn(

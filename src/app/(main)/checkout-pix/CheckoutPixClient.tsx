@@ -1,17 +1,27 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
-import Link from "next/link";
+import { Button, buttonVariants } from "@/components/atoms/Button";
 import { getProductById } from "@/data/products";
+import { formatBRL } from "@/lib/format-price";
 import { trackFbq, trackTikTok } from "@/lib/analytics";
+import { cn } from "@/lib/utils";
+
+function parseQty(raw: string | null): number {
+  const n = parseInt(raw ?? "1", 10);
+  if (Number.isNaN(n) || n < 1) return 1;
+  return Math.min(99, n);
+}
 
 export const CheckoutPixClient = () => {
   const searchParams = useSearchParams();
   const productId = searchParams.get("product") ?? "1";
+  const qtyParam = searchParams.get("qty");
+  const qty = useMemo(() => parseQty(qtyParam), [qtyParam]);
   const product = useMemo(() => getProductById(productId), [productId]);
-  const [parcelas, setParcelas] = useState<"pix" | "cc2">("pix");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<{
     copyPaste: string;
@@ -20,16 +30,25 @@ export const CheckoutPixClient = () => {
   } | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  const lineTotal = product ? product.price * qty : 0;
+
   if (!product) {
     return (
       <div className="mx-auto max-w-lg px-4 py-16 text-center">
         <p className="text-slate-600">Produto não encontrado.</p>
-        <Link href="/" className="mt-4 inline-block font-bold text-mint-600">
-          Voltar
+        <Link
+          href="/"
+          className={cn(buttonVariants({ variant: "primary" }), "mt-6 inline-flex")}
+        >
+          Voltar à página inicial
         </Link>
       </div>
     );
   }
+
+  const validityMinutes = result
+    ? Math.max(1, Math.round(result.expiresAt / 60))
+    : 0;
 
   const payPix = async () => {
     setLoading(true);
@@ -37,11 +56,11 @@ export const CheckoutPixClient = () => {
     trackFbq("InitiateCheckout", {
       content_ids: [product.id],
       content_type: "product",
-      value: product.price,
+      value: lineTotal,
       currency: "BRL",
     });
     trackTikTok("InitiateCheckout", {
-      value: product.price,
+      value: lineTotal,
       currency: "BRL",
     });
 
@@ -51,123 +70,169 @@ export const CheckoutPixClient = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           productId: product.id,
-          parcelas,
+          parcelas: "pix",
+          quantity: qty,
         }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error ?? "Erro ao gerar Pix");
+      if (!res.ok) throw new Error(data.error ?? "Não foi possível gerar o Pix.");
       setResult(data);
       trackFbq("Purchase", {
         content_ids: [product.id],
         content_type: "product",
-        value: product.price,
+        value: lineTotal,
         currency: "BRL",
       });
       trackTikTok("CompletePayment", {
-        value: product.price,
+        value: lineTotal,
         currency: "BRL",
       });
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Falha na requisição");
+      setError(e instanceof Error ? e.message : "Algo deu errado. Tente de novo.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="mx-auto max-w-lg px-4 py-10">
-      <h1 className="font-display text-2xl font-bold text-slate-900">
-        Checkout Pix
+    <div className="mx-auto min-h-[70vh] max-w-lg px-4 py-8 md:py-12">
+      <div className="mb-8 flex items-center justify-center gap-2 text-xs font-semibold text-slate-500">
+        <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-primary-foreground">
+          1
+        </span>
+        <span className="h-px w-8 bg-slate-200" aria-hidden />
+        <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-primary-foreground">
+          2
+        </span>
+        <span className="sr-only">Passo 1: revisar pedido. Passo 2: pagar com Pix.</span>
+      </div>
+      <p className="text-center text-xs font-medium uppercase tracking-wide text-slate-500">
+        Checkout seguro
+      </p>
+      <h1 className="mt-2 text-center font-display text-2xl font-bold text-slate-900 md:text-3xl">
+        Finalizar com Pix
       </h1>
-      <p className="mt-1 text-sm text-slate-600">
-        Sem endereço de entrega — só voucher digital após pagamento.
+      <p className="mx-auto mt-2 max-w-md text-center text-sm text-slate-600">
+        Você está comprando um <strong>produto físico</strong>. Após o pagamento
+        confirmado, enviamos a confirmação do pedido por e-mail.
       </p>
 
-      <div className="mt-8 flex gap-4 rounded-2xl border border-mint-100 bg-white p-4 shadow-float">
-        <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl">
-          <Image
-            src={product.images[0].src}
-            alt={product.images[0].alt}
-            fill
-            className="object-cover"
-            sizes="96px"
-          />
-        </div>
-        <div>
-          <p className="font-semibold text-slate-900">{product.name}</p>
-          <p className="mt-1 text-lg font-bold text-mint-700">
-            R$ {product.price.toFixed(2)}
-          </p>
+      <div className="mt-8 rounded-2xl border border-slate-200 bg-white p-4 shadow-float">
+        <div className="flex gap-4">
+          <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl bg-slate-100">
+            <Image
+              src={product.images[0].src}
+              alt={product.images[0].alt}
+              fill
+              className="object-cover"
+              sizes="96px"
+            />
+          </div>
+          <div className="min-w-0 flex-1">
+            <p className="font-display font-bold text-slate-900">{product.name}</p>
+            <p className="mt-1 text-sm text-slate-600">{product.shortDescription}</p>
+            <p className="mt-2 text-xl font-bold tabular-nums text-primary">
+              R$ {formatBRL(lineTotal)}
+            </p>
+            <p className="text-xs text-slate-500">
+              {qty}× no Pix · à vista · un. R$ {formatBRL(product.price)}
+            </p>
+          </div>
         </div>
       </div>
 
-      <fieldset className="mt-8">
-        <legend className="font-display font-bold text-slate-800">
-          Pagamento
-        </legend>
-        <div className="mt-3 space-y-2">
-          <label className="flex cursor-pointer items-center gap-2 rounded-xl border border-mint-200 bg-mint-50/50 px-4 py-3">
-            <input
-              type="radio"
-              name="pay"
-              checked={parcelas === "pix"}
-              onChange={() => setParcelas("pix")}
-            />
-            <span>1× no Pix (instantâneo)</span>
-          </label>
-          <label className="flex cursor-pointer items-center gap-2 rounded-xl border border-slate-200 px-4 py-3 opacity-80">
-            <input
-              type="radio"
-              name="pay"
-              checked={parcelas === "cc2"}
-              onChange={() => setParcelas("cc2")}
-            />
-            <span>2× no cartão (opcional / mock)</span>
-          </label>
-        </div>
-      </fieldset>
-
       {error ? (
-        <p className="mt-4 text-sm text-red-600" role="alert">
+        <p className="mt-4 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-800" role="alert">
           {error}
         </p>
       ) : null}
 
-      <button
-        type="button"
-        onClick={payPix}
-        disabled={loading}
-        className="mt-8 w-full rounded-full bg-bubblegum-500 py-4 font-display text-lg font-bold text-white shadow-float-pink transition hover:bg-bubblegum-600 disabled:opacity-60"
-      >
-        {loading ? "Gerando Pix…" : "Pagar com Pix"}
-      </button>
-
-      {result ? (
-        <div className="mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-4">
-          <p className="text-sm font-semibold text-slate-800">
-            Copia e cola (mock)
-          </p>
-          <pre className="mt-2 max-h-24 overflow-auto break-all text-xs text-slate-600">
-            {result.copyPaste}
-          </pre>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={result.qrCode}
-            alt="QR Code Pix"
-            className="mx-auto mt-4 h-40 w-40"
-          />
-          <p className="mt-2 text-center text-xs text-slate-500">
-            Expira em {result.expiresAt}s (simulado). Conecte Mercado Pago /
-            Pagar.me / Gerencianet na API real.
+      {!result ? (
+        <>
+          <div className="mt-8 rounded-2xl border border-mint-100 bg-mint-50/50 p-4">
+            <p className="text-sm font-semibold text-slate-800">Forma de pagamento</p>
+            <p className="mt-1 text-sm text-slate-600">
+              Pix com QR Code ou código copia e cola — confirmação em minutos na
+              maioria dos bancos.
+            </p>
+          </div>
+          <Button
+            type="button"
+            onClick={payPix}
+            disabled={loading}
+            className="mt-8 w-full min-h-14 text-lg"
+          >
+            {loading ? (
+              <span className="inline-flex items-center gap-2">
+                <span className="h-5 w-5 animate-spin rounded-full border-2 border-primary-foreground border-t-transparent" />
+                Gerando código Pix…
+              </span>
+            ) : (
+              `Pagar R$ ${formatBRL(lineTotal)} com Pix`
+            )}
+          </Button>
+        </>
+      ) : (
+        <div className="mt-8 space-y-4">
+          <div
+            className="rounded-2xl border border-primary/30 bg-primary/5 p-4 text-center"
+            role="status"
+          >
+            <p className="text-sm font-bold text-primary">Código Pix gerado</p>
+            <p className="mt-1 text-sm text-slate-600">
+              Escaneie o QR no app do banco ou copie o código abaixo.
+            </p>
+          </div>
+          <div className="flex justify-center rounded-2xl border border-slate-200 bg-white p-4">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={result.qrCode}
+              alt="QR Code para pagamento Pix"
+              width={176}
+              height={176}
+              className="h-44 w-44"
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="pix-copy"
+              className="text-xs font-semibold uppercase tracking-wide text-slate-500"
+            >
+              Pix copia e cola
+            </label>
+            <textarea
+              id="pix-copy"
+              readOnly
+              rows={3}
+              className="mt-2 w-full resize-none rounded-xl border border-slate-200 bg-slate-50 p-3 font-mono text-xs text-slate-800"
+              value={result.copyPaste}
+            />
+            <button
+              type="button"
+              className={cn(
+                buttonVariants({ variant: "outline" }),
+                "mt-3 w-full"
+              )}
+              onClick={() => {
+                void navigator.clipboard.writeText(result.copyPaste);
+              }}
+            >
+              Copiar código
+            </button>
+          </div>
+          <p className="text-center text-xs text-slate-500">
+            Este código permanece válido por aproximadamente {validityMinutes}{" "}
+            minutos. Conclua o pagamento no app do seu banco para confirmar seu
+            pedido.
           </p>
         </div>
-      ) : null}
+      )}
 
       <Link
-        href={`/produto/${product.slug}`}
-        className="mt-6 inline-block text-sm font-semibold text-mint-700"
+        href="/"
+        className="mt-8 block text-center text-sm font-semibold text-primary hover:underline"
       >
-        ← Voltar ao produto
+        ← Voltar à oferta
       </Link>
     </div>
   );

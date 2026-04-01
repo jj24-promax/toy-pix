@@ -73,7 +73,10 @@ export default function MainLayout({
         </noscript>
       ) : null}
       <SiteHeader />
-      <main id="conteudo-principal" className="min-h-[60vh]">
+      <main
+        id="conteudo-principal"
+        className="min-h-[60vh] pb-24 md:pb-0"
+      >
         {children}
       </main>
       <footer className="border-t border-mint-100 bg-white py-10 text-center text-sm text-slate-600">
@@ -81,7 +84,7 @@ export default function MainLayout({
           © {new Date().getFullYear()} Toy Pix
         </p>
         <p className="mt-1 text-slate-500">
-          Pagamentos com Pix · Voucher digital · Atendimento em horário comercial
+          Pagamentos com Pix · Compra segura · Atendimento em horário comercial
         </p>
       </footer>
     </>

@@ -2,12 +2,17 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 function pad(n: number) {
   return n.toString().padStart(2, "0");
 }
 
-export const CountdownTimer = () => {
+type Props = {
+  className?: string;
+};
+
+export const CountdownTimer = ({ className }: Props) => {
   const [left, setLeft] = useState(2 * 60 * 60 + 15 * 60);
 
   useEffect(() => {
@@ -28,7 +33,11 @@ export const CountdownTimer = () => {
       role="timer"
       aria-live="polite"
       aria-label={label}
-      className="mt-6 inline-flex gap-2 rounded-2xl bg-white/20 px-4 py-3 font-mono text-2xl font-bold tabular-nums backdrop-blur-sm"
+      className={cn(
+        "inline-flex gap-2 rounded-2xl px-4 py-3 font-mono text-2xl font-bold tabular-nums",
+        "bg-slate-900 text-white shadow-inner",
+        className
+      )}
       initial={{ opacity: 0, y: 8 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
