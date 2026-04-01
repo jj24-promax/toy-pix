@@ -1,11 +1,13 @@
 import Script from "next/script";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 
-const FB_PIXEL_ID =
-  process.env.NEXT_PUBLIC_META_PIXEL_ID ?? "REPLACE_META_PIXEL_ID";
-const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID ?? "GTM-XXXXXXX";
-const TIKTOK_PIXEL_ID =
-  process.env.NEXT_PUBLIC_TIKTOK_PIXEL_ID ?? "REPLACE_TIKTOK_PIXEL_ID";
+const FB_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID ?? "";
+const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID ?? "";
+const TIKTOK_PIXEL_ID = process.env.NEXT_PUBLIC_TIKTOK_PIXEL_ID ?? "";
+
+const loadGtm = Boolean(GTM_ID && !GTM_ID.includes("XXXX"));
+const loadFb = Boolean(FB_PIXEL_ID && !FB_PIXEL_ID.includes("REPLACE"));
+const loadTiktok = Boolean(TIKTOK_PIXEL_ID && !TIKTOK_PIXEL_ID.includes("REPLACE"));
 
 export default function MainLayout({
   children,
@@ -14,14 +16,23 @@ export default function MainLayout({
 }) {
   return (
     <>
-      <Script id="gtm-base" strategy="afterInteractive">{`
+      <a
+        href="#conteudo-principal"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-white focus:px-4 focus:py-3 focus:text-sm focus:font-semibold focus:text-slate-900 focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary"
+      >
+        Pular para o conteúdo
+      </a>
+      {loadGtm ? (
+        <Script id="gtm-base" strategy="afterInteractive">{`
         (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
         new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
         j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
         })(window,document,'script','dataLayer','${GTM_ID}');
       `}</Script>
-      <Script id="fb-pixel" strategy="afterInteractive">{`
+      ) : null}
+      {loadFb ? (
+        <Script id="fb-pixel" strategy="afterInteractive">{`
         !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
         n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
         n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
@@ -30,7 +41,9 @@ export default function MainLayout({
         fbq('init','${FB_PIXEL_ID}');
         fbq('track','PageView');
       `}</Script>
-      <Script id="tiktok-pixel" strategy="afterInteractive">{`
+      ) : null}
+      {loadTiktok ? (
+        <Script id="tiktok-pixel" strategy="afterInteractive">{`
         !function (w, d, t) {
           w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];
           ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"];
@@ -47,19 +60,29 @@ export default function MainLayout({
           ttq.page();
         }(window, document, 'ttq');
       `}</Script>
-      <noscript>
-        <iframe
-          src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
-          height="0"
-          width="0"
-          title="GTM"
-          style={{ display: "none", visibility: "hidden" }}
-        />
-      </noscript>
+      ) : null}
+      {loadGtm ? (
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+            height="0"
+            width="0"
+            title="Google Tag Manager"
+            style={{ display: "none", visibility: "hidden" }}
+          />
+        </noscript>
+      ) : null}
       <SiteHeader />
-      <main className="min-h-[60vh]">{children}</main>
-      <footer className="border-t border-mint-100 bg-white py-8 text-center text-sm text-slate-500">
-        <p>© {new Date().getFullYear()} Toy Pix — substitua IDs de pixel no .env</p>
+      <main id="conteudo-principal" className="min-h-[60vh]">
+        {children}
+      </main>
+      <footer className="border-t border-mint-100 bg-white py-10 text-center text-sm text-slate-600">
+        <p className="font-medium text-slate-800">
+          © {new Date().getFullYear()} Toy Pix
+        </p>
+        <p className="mt-1 text-slate-500">
+          Pagamentos com Pix · Voucher digital · Atendimento em horário comercial
+        </p>
       </footer>
     </>
   );

@@ -2,8 +2,11 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { buttonVariants } from "@/components/atoms/Button";
 import { PixButtonFixed } from "@/components/molecules/PixButtonFixed";
+import { formatBRL } from "@/lib/format-price";
 import { trackFbq, trackTikTok } from "@/lib/analytics";
+import { cn } from "@/lib/utils";
 
 type Props = {
   price: number;
@@ -25,7 +28,7 @@ export const HeroCta = ({ price, productId }: Props) => {
   };
 
   return (
-    <div className="mt-8 flex min-h-[3.5rem] flex-col items-center justify-center gap-4 space-y-2">
+    <div className="mt-8 flex w-full max-w-md flex-col items-stretch gap-3 sm:items-center">
       <PixButtonFixed price={price} onClick={goCheckout} />
       <Link
         href={`/checkout-pix?product=${productId}`}
@@ -37,9 +40,12 @@ export const HeroCta = ({ price, productId }: Props) => {
             currency: "BRL",
           });
         }}
-        className="hidden rounded-full bg-white/95 px-8 py-3 text-base font-bold text-slate-900 shadow-float-sun transition hover:bg-sun-300 md:inline-flex"
+        className={cn(
+          buttonVariants({ variant: "primary" }),
+          "hidden w-full min-h-12 text-base shadow-float sm:w-auto md:inline-flex"
+        )}
       >
-        Comprar agora — R$ {price.toFixed(2)} no Pix
+        Comprar agora — R$ {formatBRL(price)} no Pix
       </Link>
     </div>
   );

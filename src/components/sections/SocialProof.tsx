@@ -11,9 +11,15 @@ function Stars({ n }: { n: number }) {
 }
 
 export const SocialProof = () => (
-  <section className="border-y border-mint-100 bg-mint-50/80 py-12">
+  <section
+    className="border-y border-mint-100 bg-mint-50/80 py-14 md:py-16"
+    aria-labelledby="reviews-heading"
+  >
     <div className="mx-auto max-w-6xl px-4">
-      <h2 className="font-display text-center text-2xl font-bold text-slate-900 md:text-3xl">
+      <h2
+        id="reviews-heading"
+        className="font-display text-center text-2xl font-bold tracking-tight text-slate-900 md:text-3xl"
+      >
         Quem já levou alegria pra casa
       </h2>
       <div className="mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">

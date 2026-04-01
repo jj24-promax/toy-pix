@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Fredoka, Nunito } from "next/font/google";
 import "@/styles/globals.css";
+import { siteUrl } from "@/lib/site-url";
 
 const nunito = Nunito({
   subsets: ["latin"],
@@ -16,7 +17,7 @@ const fredoka = Fredoka({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://example.com"),
+  metadataBase: new URL(siteUrl),
   title: {
     default: "Toy Pix — Brinquedos com Pix",
     template: "%s | Toy Pix",

@@ -10,7 +10,20 @@ const config: Config = {
     extend: {
       colors: {
         background: "var(--background)",
-        foreground: "var(--foreground)",
+        foreground: {
+          DEFAULT: "var(--foreground)",
+          muted: "var(--foreground-muted)",
+        },
+        primary: {
+          DEFAULT: "var(--primary)",
+          hover: "var(--primary-hover)",
+          active: "var(--primary-active)",
+          foreground: "var(--on-primary)",
+        },
+        surface: "var(--surface)",
+        ring: {
+          brand: "var(--ring)",
+        },
         mint: {
           50: "#ecfdf8",
           100: "#d0f7ea",

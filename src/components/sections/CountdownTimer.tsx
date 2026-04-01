@@ -21,19 +21,25 @@ export const CountdownTimer = () => {
   const m = Math.floor((left % 3600) / 60);
   const s = left % 60;
 
+  const label = `Tempo restante da oferta: ${pad(h)} horas, ${pad(m)} minutos e ${pad(s)} segundos`;
+
   return (
     <motion.div
-      className="mt-4 inline-flex gap-2 rounded-2xl bg-white/20 px-4 py-2 font-mono text-2xl font-bold tabular-nums backdrop-blur-sm"
+      role="timer"
+      aria-live="polite"
+      aria-label={label}
+      className="mt-6 inline-flex gap-2 rounded-2xl bg-white/20 px-4 py-3 font-mono text-2xl font-bold tabular-nums backdrop-blur-sm"
       initial={{ opacity: 0, y: 8 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.4 }}
     >
-      <span>{pad(h)}</span>
+      <span aria-hidden>{pad(h)}</span>
       <span aria-hidden>:</span>
-      <span>{pad(m)}</span>
+      <span aria-hidden>{pad(m)}</span>
       <span aria-hidden>:</span>
-      <span>{pad(s)}</span>
+      <span aria-hidden>{pad(s)}</span>
+      <span className="sr-only">{label}</span>
     </motion.div>
   );
 };

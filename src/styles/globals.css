@@ -2,9 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+  Design tokens — espaçamento: preferir escala Tailwind (base 4px).
+  Cores de conversão: usar sempre `primary` para o CTA principal.
+*/
 :root {
   --background: #f8fffe;
   --foreground: #0f172a;
+  --foreground-muted: #475569;
+  --primary: #14b896;
+  --primary-hover: #0f9d80;
+  --primary-active: #0d7a66;
+  --on-primary: #ffffff;
+  --surface: #ffffff;
+  --border-subtle: rgba(20, 184, 150, 0.12);
+  --ring: #14b896;
 }
 
 body {

@@ -50,15 +50,21 @@ const items = [
 ];
 
 export const Benefits = () => (
-  <section className="mx-auto max-w-6xl px-4 py-16">
-    <h2 className="font-display text-center text-3xl font-bold text-slate-900 md:text-4xl">
+  <section
+    className="mx-auto max-w-6xl px-4 py-16 md:py-20"
+    aria-labelledby="benefits-heading"
+  >
+    <h2
+      id="benefits-heading"
+      className="font-display text-center text-3xl font-bold tracking-tight text-slate-900 md:text-4xl"
+    >
       Por que as famílias confiam
     </h2>
-    <div className="mt-10 grid gap-10 md:grid-cols-3">
+    <div className="mt-10 grid gap-8 md:grid-cols-3 md:gap-10">
       {items.map((item, i) => (
-        <div
+        <article
           key={item.title}
-          className="flex flex-col items-center rounded-3xl bg-white p-8 text-center shadow-float"
+          className="flex flex-col items-center rounded-3xl bg-surface p-8 text-center shadow-float"
         >
           <div
             className="mb-4 text-mint-500 motion-safe:animate-float"
@@ -70,7 +76,7 @@ export const Benefits = () => (
             {item.title}
           </h3>
           <p className="mt-2 text-slate-600">{item.body}</p>
-        </div>
+        </article>
       ))}
     </div>
   </section>
