@@ -50,13 +50,13 @@ export function LPHero({ product }: Props) {
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
             <Link
-              href={`/checkout-pix?product=${product.id}`}
+              href={`/produto/${product.slug}`}
               className={cn(
                 buttonVariants({ variant: "primary" }),
                 "min-h-14 w-full px-8 text-base sm:w-auto md:min-h-[3.5rem] md:text-lg"
               )}
             >
-              Comprar agora — R$ {formatBRL(product.price)}
+              Ver detalhes — R$ {formatBRL(product.price)}
             </Link>
             <a
               href="#oferta"
@@ -70,7 +70,7 @@ export function LPHero({ product }: Props) {
           </div>
 
           <p className="mt-4 text-xs text-slate-500 md:text-sm">
-            Pagamento via Pix · Compra confirmada por e-mail · Atendimento rápido
+            Compra segura · Envio para todo o Brasil · Atendimento rápido
           </p>
         </div>
 

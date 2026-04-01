@@ -2,10 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { buttonVariants } from "@/components/atoms/Button";
 import { CountdownTimer } from "@/components/sections/CountdownTimer";
 import { oceanOffer } from "@/data/ocean-offer";
+import { globalFaq, globalReviews, storeTrustItems } from "@/data/store-content";
 import { formatBRL } from "@/lib/format-price";
 import { cn } from "@/lib/utils";
 
@@ -23,10 +24,7 @@ function Stars({ rating }: { rating: number }) {
 }
 
 export function OceanOfferPage() {
-  const [activeImage, setActiveImage] = useState(0);
-  const featured = oceanOffer.gallery[activeImage] ?? oceanOffer.gallery[0];
-  const flagshipId = "1";
-
+  const featured = oceanOffer.gallery[0];
   const kits = useMemo(
     () =>
       oceanOffer.kits.map((k) => ({
@@ -96,26 +94,6 @@ export function OceanOfferPage() {
                 sizes="(max-width:1024px) 100vw, 520px"
               />
             </div>
-            <div className="mt-3 grid grid-cols-4 gap-2">
-              {oceanOffer.gallery.map((g, idx) => (
-                <button
-                  key={g.alt + g.tag}
-                  type="button"
-                  onClick={() => setActiveImage(idx)}
-                  className={cn(
-                    "overflow-hidden rounded-xl border bg-white text-left shadow-sm transition hover:-translate-y-0.5",
-                    idx === activeImage ? "border-primary ring-2 ring-primary/30" : "border-slate-200"
-                  )}
-                >
-                  <div className="relative aspect-square">
-                    <Image src={g.src} alt={g.alt} fill className="object-cover" sizes="120px" />
-                  </div>
-                  <p className="px-2 py-1 text-[11px] font-bold uppercase tracking-wide text-slate-600">
-                    {g.tag}
-                  </p>
-                </button>
-              ))}
-            </div>
           </article>
         </div>
       </section>
@@ -153,10 +131,10 @@ export function OceanOfferPage() {
                   Economize R$ {formatBRL(k.save)}
                 </p>
                 <Link
-                  href={`/checkout-pix?product=${flagshipId}&qty=${Math.floor(k.quantity / 12)}`}
+                  href="/produto/kit-aventura-espacial"
                   className={cn(buttonVariants({ variant: "primary" }), "mt-5 w-full")}
                 >
-                  {k.cta}
+                  Ver detalhes do kit
                 </Link>
               </article>
             ))}
@@ -204,7 +182,7 @@ export function OceanOfferPage() {
           Avaliações de famílias reais
         </h2>
         <div className="mt-8 grid gap-4 md:grid-cols-3">
-          {oceanOffer.reviews.map((r) => (
+          {globalReviews.map((r) => (
             <article key={r.id} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
               <div className="flex items-center gap-3">
                 <Image src={r.avatar} alt="" width={44} height={44} className="h-11 w-11 rounded-full" />
@@ -225,14 +203,7 @@ export function OceanOfferPage() {
           <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm md:p-8">
             <h2 className="font-display text-3xl font-bold text-slate-900 md:text-4xl">Compra sem risco</h2>
             <div className="mt-6 grid gap-3 text-sm font-semibold text-slate-700 md:grid-cols-3">
-              {[
-                "30 dias de garantia",
-                "Devolução fácil",
-                "Compra segura",
-                "Frete grátis",
-                "Entrega rastreada",
-                "Produto certificado",
-              ].map((item) => (
+              {storeTrustItems.map((item) => (
                 <p key={item} className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2">
                   {item}
                 </p>
@@ -247,12 +218,12 @@ export function OceanOfferPage() {
           Dúvidas frequentes
         </h2>
         <div className="mt-8 space-y-3">
-          {oceanOffer.faq.map((item) => (
-            <details key={item.q} className="group rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+          {globalFaq.map((item) => (
+            <details key={item.question} className="group rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
               <summary className="cursor-pointer list-none font-semibold text-slate-900 marker:content-none [&::-webkit-details-marker]:hidden">
-                {item.q}
+                {item.question}
               </summary>
-              <p className="mt-2 text-sm leading-relaxed text-slate-600">{item.a}</p>
+              <p className="mt-2 text-sm leading-relaxed text-slate-600">{item.answer}</p>
             </details>
           ))}
         </div>
@@ -290,13 +261,13 @@ export function OceanOfferPage() {
       </footer>
 
       <a
-        href="#kits"
+        href="/produto/kit-aventura-espacial"
         className={cn(
           buttonVariants({ variant: "primary" }),
           "fixed bottom-4 left-4 right-4 z-40 min-h-12 text-base shadow-float md:hidden"
         )}
       >
-        Comprar agora
+        Ver produto em destaque
       </a>
     </div>
   );

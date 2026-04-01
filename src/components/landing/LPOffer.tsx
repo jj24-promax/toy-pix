@@ -37,7 +37,7 @@ export function LPOffer({ product }: Props) {
             <p className="font-display text-4xl font-extrabold text-primary md:text-5xl">
               R$ {formatBRL(product.price)}
             </p>
-            <p className="text-sm font-semibold text-slate-700">no Pix à vista</p>
+            <p className="text-sm font-semibold text-slate-700">oferta em destaque</p>
           </div>
 
           <div className="mt-6 rounded-2xl border border-amber-200/80 bg-amber-50/80 px-4 py-3 text-sm text-amber-950">
@@ -53,16 +53,16 @@ export function LPOffer({ product }: Props) {
           </div>
 
           <Link
-            href={`/checkout-pix?product=${product.id}`}
+            href={`/produto/${product.slug}`}
             className={cn(
               buttonVariants({ variant: "primary" }),
               "mt-8 w-full min-h-14 text-lg"
             )}
           >
-            Garantir meu kit no Pix
+            Ver detalhes do produto
           </Link>
           <p className="mt-3 text-xs text-slate-500">
-            Ao continuar, você será direcionado ao checkout seguro com código Pix.
+            A finalização de compra será liberada em breve.
           </p>
         </div>
       </div>

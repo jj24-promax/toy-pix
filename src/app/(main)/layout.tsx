@@ -84,7 +84,7 @@ export default function MainLayout({
           © {new Date().getFullYear()} Toy Pix
         </p>
         <p className="mt-1 text-slate-500">
-          Pagamentos com Pix · Compra segura · Atendimento em horário comercial
+          Loja de brinquedos físicos · Envio nacional · Atendimento em horário comercial
         </p>
       </footer>
     </>

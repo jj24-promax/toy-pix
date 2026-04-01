@@ -19,11 +19,11 @@ const fredoka = Fredoka({
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Toy Pix — Brinquedos com Pix",
+    default: "Toy Pix — Loja de Brinquedos",
     template: "%s | Toy Pix",
   },
   description:
-    "Brinquedos selecionados com compra segura via Pix. Entrega sem complicação.",
+    "Brinquedos selecionados com envio para todo o Brasil, rastreio e compra segura.",
 };
 
 export default function RootLayout({

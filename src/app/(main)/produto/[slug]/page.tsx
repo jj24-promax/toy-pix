@@ -6,12 +6,19 @@ import { Badge } from "@/components/atoms/Badge";
 import { buttonVariants } from "@/components/atoms/Button";
 import { PriceTag } from "@/components/atoms/PriceTag";
 import { ProductImageCarousel } from "@/components/product/ProductImageCarousel";
+import { ProductFaq } from "@/components/product/ProductFaq";
+import { RelatedProducts } from "@/components/product/RelatedProducts";
 import { ProductReviews } from "@/components/product/ProductReviews";
 import { ProductSidebar } from "@/components/product/ProductSidebar";
 import { ProductStickyBar } from "@/components/product/ProductStickyBar";
 import { ProductViewTracker } from "@/components/product/ProductViewTracker";
 import { products, getProductBySlug } from "@/data/products";
-import { productReviews } from "@/data/reviews";
+import {
+  getProductDetails,
+  getProductFaq,
+  getProductReviews,
+  getRelatedProducts,
+} from "@/data/product-content";
 import { formatBRL } from "@/lib/format-price";
 import { siteUrl } from "@/lib/site-url";
 import { cn } from "@/lib/utils";
@@ -50,6 +57,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default function ProductPage({ params }: Props) {
   const product = getProductBySlug(params.slug);
   if (!product) notFound();
+  const details = getProductDetails(product.id);
+  const productFaq = getProductFaq(product.id);
+  const productReviews = getProductReviews(product.id);
+  const relatedProducts = getRelatedProducts(product.id, 4);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -76,13 +87,12 @@ export default function ProductPage({ params }: Props) {
       />
       <ProductStickyBar
         price={product.price}
-        productId={product.id}
         productName={product.name}
       />
       <article className="mx-auto max-w-6xl px-4 pb-16 pt-6">
         <p className="mb-4 rounded-xl bg-primary/10 px-4 py-3 text-sm text-slate-700">
           <Link href="/#oferta" className="font-bold text-primary hover:underline">
-            Ver oferta completa do Kit Espacial na página principal →
+            Ver oferta principal do Kit Bomba de Banho na página inicial →
           </Link>
         </p>
         <nav aria-label="Breadcrumb" className="text-sm text-slate-500">
@@ -118,14 +128,19 @@ export default function ProductPage({ params }: Props) {
                 {product.name}
               </h1>
               <PriceTag amount={product.price} className="mt-3 block" size="lg" />
+              {product.compareAtPrice ? (
+                <p className="mt-1 text-sm text-slate-400 line-through">
+                  De R$ {formatBRL(product.compareAtPrice)}
+                </p>
+              ) : null}
               <Link
-                href={`/checkout-pix?product=${product.id}`}
+                href="/contato"
                 className={cn(
                   buttonVariants({ variant: "primary" }),
                   "mt-6 w-full min-h-12 md:hidden"
                 )}
               >
-                Comprar com Pix
+                Comprar em breve
               </Link>
               <p className="mt-6 text-base leading-relaxed text-slate-700">
                 {product.shortDescription}
@@ -139,12 +154,60 @@ export default function ProductPage({ params }: Props) {
                   id="product-desc"
                   className="font-display text-xl font-bold text-slate-900"
                 >
-                  Descrição
+                  Descrição completa
                 </h2>
                 <p className="mt-2 text-slate-600 leading-relaxed">
-                  {product.description}
+                  {details.longDescription}
                 </p>
               </section>
+              <section className="mt-8 grid gap-6 md:grid-cols-2">
+                <article className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                  <h2 className="font-display text-lg font-bold text-slate-900">
+                    Benefícios principais
+                  </h2>
+                  <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-slate-600">
+                    {details.highlights.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </article>
+                <article className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                  <h2 className="font-display text-lg font-bold text-slate-900">
+                    O que vem na caixa
+                  </h2>
+                  <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-slate-600">
+                    {details.inTheBox.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </article>
+              </section>
+              <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                <h2 className="font-display text-lg font-bold text-slate-900">
+                  Especificações técnicas
+                </h2>
+                <dl className="mt-3 grid gap-2 sm:grid-cols-2">
+                  {details.specs.map((spec) => (
+                    <div key={spec.label} className="rounded-xl bg-slate-50 p-3">
+                      <dt className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                        {spec.label}
+                      </dt>
+                      <dd className="mt-1 text-sm text-slate-800">{spec.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </section>
+              <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                <h2 className="font-display text-lg font-bold text-slate-900">
+                  Segurança e cuidados
+                </h2>
+                <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-slate-600">
+                  {details.safety.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </section>
+              <ProductFaq items={productFaq} />
               <ProductReviews reviews={productReviews} />
             </div>
           </div>
@@ -153,7 +216,7 @@ export default function ProductPage({ params }: Props) {
 
         <section
           className="mt-10 hidden rounded-3xl border border-mint-100 bg-mint-50/50 p-6 md:block"
-          aria-label="Resumo e checkout"
+          aria-label="Resumo de compra"
         >
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex min-w-0 items-center gap-4">
@@ -174,13 +237,14 @@ export default function ProductPage({ params }: Props) {
               </div>
             </div>
             <Link
-              href={`/checkout-pix?product=${product.id}`}
+              href="/contato"
               className={cn(buttonVariants({ variant: "primary" }), "shrink-0")}
             >
-              Pagar com Pix
+              Quero este produto
             </Link>
           </div>
         </section>
+        <RelatedProducts products={relatedProducts} />
       </article>
     </>
   );

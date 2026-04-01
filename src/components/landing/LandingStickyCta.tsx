@@ -45,13 +45,13 @@ export function LandingStickyCta({ product }: Props) {
           </p>
         </div>
         <Link
-          href={`/checkout-pix?product=${product.id}`}
+          href={`/produto/${product.slug}`}
           className={cn(
             buttonVariants({ variant: "primary" }),
             "min-h-12 shrink-0 px-5 text-sm"
           )}
         >
-          Comprar
+          Ver produto
         </Link>
       </div>
     </div>

@@ -50,7 +50,7 @@ const spotlights: {
 ];
 
 const trustBadges = [
-  "Checkout Pix seguro",
+  "Compra segura",
   "Envio rápido para todo o Brasil",
   "Garantia de 7 dias",
 ];
@@ -64,11 +64,11 @@ const socialCounters = [
 const testimonials = [
   {
     author: "Emily R.",
-    text: "Minha filha ficou encantada. O checkout foi rápido e os avisos de entrega vieram certinhos.",
+    text: "Minha filha ficou encantada. O pedido chegou no prazo e os avisos de entrega vieram certinhos.",
   },
   {
     author: "Nathan B.",
-    text: "Parece loja premium de brinquedos. Excelente custo-benefício e pagamento via Pix muito fácil.",
+    text: "Parece loja premium de brinquedos. Excelente custo-benefício e qualidade dos produtos.",
   },
   {
     author: "Sofia M.",
@@ -415,7 +415,7 @@ export function ProductCatalog() {
         </h1>
         <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-200 md:text-base">
           Brinquedos de alta procura, selecionados para pais modernos. Estoque
-          limitado nos campeões de venda, confirmação rápida e checkout Pix seguro.
+          limitado nos campeões de venda, com envio para todo o Brasil e rastreio.
         </p>
         <div className="mt-4 flex flex-wrap gap-2">
           {trustBadges.map((badge) => (
@@ -434,7 +434,7 @@ export function ProductCatalog() {
             "mt-6 inline-flex min-h-12 px-8 text-base font-extrabold"
           )}
         >
-          Comprar mais vendidos
+          Ver mais vendidos
         </a>
         <details className="group mt-4 max-w-2xl rounded-2xl border border-slate-200/80 bg-white/70 p-4 backdrop-blur-sm">
           <summary className="cursor-pointer list-none font-semibold text-slate-800 transition marker:content-none [&::-webkit-details-marker]:hidden">
@@ -452,7 +452,7 @@ export function ProductCatalog() {
             A Toy Pix reúne curadoria infantil com foco em segurança e diversão.
             Trabalhamos com marcas parceiras e descrições claras para você
             escolher com confiança. Dúvidas? Use o FAQ na página principal ou
-            fale conosco após o pedido.
+            fale com nosso time de atendimento.
           </p>
         </details>
       </section>
@@ -482,8 +482,8 @@ export function ProductCatalog() {
               Diversão garantida para cada fase
             </h2>
             <p className="mt-2 max-w-md text-sm text-slate-200 md:text-base">
-              Kits espaciais, pistas neon e arte criativa — tudo com checkout Pix
-              simples para compra direta do produto.
+              Kits especiais, pistas neon e arte criativa para diferentes idades
+              e estilos de brincadeira.
             </p>
             <Link
               href="/#oferta"

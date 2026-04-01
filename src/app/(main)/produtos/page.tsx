@@ -7,11 +7,11 @@ import { siteUrl } from "@/lib/site-url";
 export const metadata: Metadata = {
   title: "Produtos",
   description:
-    "Catálogo Toy Pix: brinquedos por categoria, marca e faixa etária. Checkout com Pix para compra direta.",
+    "Catálogo Toy Pix: brinquedos por categoria, marca e faixa etária para toda a família.",
   openGraph: {
     title: "Produtos | Toy Pix",
     description:
-      "Explore montar, pelúcias, pistas e jogos. Filtre e compre com Pix.",
+      "Explore montar, pelúcias, pistas e jogos. Filtre por categoria, idade e marca.",
     url: `${siteUrl}/produtos`,
     type: "website",
   },
@@ -72,12 +72,11 @@ export default function ProdutosPage() {
           pistas e veículos, além de jogos que estimulam o raciocínio. Use os
           filtros laterais para refinar por categoria, marca, perfil e faixa
           etária. Todos os valores aparecem em reais, com parcelamento
-          sugerido para referência e pagamento à vista via Pix no checkout.
+          sugerido apenas como apoio visual para comparar opções.
         </p>
         <p className="mt-3">
-          Ao concluir a compra, você recebe a confirmação do pedido por e-mail.
-          Em caso de dúvida sobre prazos ou trocas, consulte a garantia e o FAQ
-          na página inicial.
+          A finalização de compra está em preparação. Em caso de dúvida sobre
+          prazos ou trocas, consulte a garantia e o FAQ na página inicial.
         </p>
       </section>
 

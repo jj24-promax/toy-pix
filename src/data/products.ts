@@ -24,7 +24,7 @@ export const products: Product[] = [
     name: "Kit Bomba de Banho",
     shortDescription: "Foguete, astronauta e mapa das estrelas — diversão sem fim.",
     description:
-      "Kit completo com peças grandes, fáceis de encaixar e pintura atóxica. Inclui manual ilustrado e código para resgate digital do poster exclusivo.",
+      "Kit completo com peças grandes, fáceis de encaixar e pintura atóxica. Inclui manual ilustrado e embalagem premium para presente.",
     price: 89.9,
     compareAtPrice: 119.9,
     images: [
@@ -54,7 +54,7 @@ export const products: Product[] = [
     name: "Bichinhos da Fazenda",
     shortDescription: "Coleção macia com sons suaves — segura para bebês.",
     description:
-      "Tecido hipoalergênico, sem peças soltas. Cada bichinho ativa um som curto ao apertar. Entrega digital do certificado de origem inclusa.",
+      "Tecido hipoalergênico, sem peças soltas. Cada bichinho ativa um som curto ao apertar e acompanha instruções de conservação.",
     price: 64.5,
     images: [
       {
@@ -78,7 +78,7 @@ export const products: Product[] = [
     name: "Pista Mágica de Carros",
     shortDescription: "Pista flexível com curvas neon e 2 mini carrinhos.",
     description:
-      "Monte circuitos diferentes em segundos. Acabamento fosco antiderrapante. Compra confirmada por Pix com envio de confirmação por e-mail.",
+      "Monte circuitos diferentes em segundos. Acabamento fosco antiderrapante e excelente durabilidade para uso diário.",
     price: 119.0,
     compareAtPrice: 149.0,
     images: [
@@ -104,7 +104,7 @@ export const products: Product[] = [
     name: "Arte com Adesivos",
     shortDescription: "500 adesivos brilhantes + cartela gigante reutilizável.",
     description:
-      "Estimula coordenação motora fina. Tudo lavável. Guia digital com ideias de atividades enviado por e-mail após o Pix.",
+      "Estimula coordenação motora fina. Tudo lavável e pronto para atividades criativas em casa ou na escola.",
     price: 39.9,
     images: [
       {

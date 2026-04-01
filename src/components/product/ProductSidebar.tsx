@@ -8,18 +8,18 @@ export const ProductSidebar = () => (
       </p>
     </div>
     <div className="rounded-2xl border border-skyplay-400/30 bg-sky-50/80 p-5 shadow-sm">
-      <h3 className="font-display font-bold text-slate-900">Compra confirmada</h3>
+      <h3 className="font-display font-bold text-slate-900">Envio para todo o Brasil</h3>
       <p className="mt-2 text-sm leading-relaxed text-slate-600">
-        Após a confirmação do Pix você recebe o e-mail de confirmação com os
-        detalhes do pedido.
+        Separação em até 1 dia útil com atualização de rastreio por e-mail em
+        cada etapa da entrega.
       </p>
     </div>
     <div className="rounded-2xl border border-primary/20 bg-primary/5 p-5 shadow-sm">
-      <h3 className="font-display font-bold text-slate-900">Pix em 3 passos</h3>
+      <h3 className="font-display font-bold text-slate-900">Compra em breve</h3>
       <ol className="mt-3 list-decimal space-y-2 pl-4 text-sm leading-relaxed text-slate-600">
-        <li>Finalize o pedido na página de checkout.</li>
-        <li>Pague com QR Code ou Pix copia e cola.</li>
-        <li>Receba a confirmação do pedido assim que o pagamento for confirmado.</li>
+        <li>Escolha seu produto e veja todos os detalhes.</li>
+        <li>Clique em "Quero este produto" para falar com nosso time.</li>
+        <li>Finalize a compra assim que o checkout oficial for liberado.</li>
       </ol>
     </div>
   </aside>

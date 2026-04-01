@@ -23,6 +23,18 @@ export const SiteHeader = () => {
           >
             Toy Pix
           </Link>
+          <form className="hidden max-w-sm flex-1 md:block" action="/produtos">
+            <label htmlFor="busca-header" className="sr-only">
+              Buscar produtos
+            </label>
+            <input
+              id="busca-header"
+              name="q"
+              type="search"
+              placeholder="Buscar brinquedos, marcas e categorias"
+              className="h-11 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm text-slate-800 outline-none ring-primary/30 placeholder:text-slate-400 focus:border-primary focus:ring-2"
+            />
+          </form>
           <nav
             className="hidden items-center gap-1 md:flex"
             aria-label="Principal"
